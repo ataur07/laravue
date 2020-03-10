@@ -5,6 +5,7 @@ git init
 git add README.md
 git commit -m "first commit"
 git remote add origin https://github.com/ataur07/laravue.git
+git remote -v
 git push -u origin master
 
 

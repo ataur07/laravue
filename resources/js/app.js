@@ -7,7 +7,24 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import moment from 'moment';
+import { Form, HasError, AlertError } from 'vform';
+window.Form=Form;
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
 
+
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter)
+
+import {routes} from './routes';
+
+
+const router = new VueRouter({
+  routes, // short for `routes: routes`
+    mode:'history'
+})
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -19,7 +36,20 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+
+Vue.filter('capitalize', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.charAt(0).toUpperCase() + value.slice(1)
+});
+
+Vue.filter('myDate', function (value) {
+  return value.moment().format('MMMM Do YYYY, h:mm:ss a');
+});
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,4 +59,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router,
+
 });
